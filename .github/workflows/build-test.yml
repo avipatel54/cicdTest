@@ -2,9 +2,11 @@ name: Code Analysis and Dependency Check
 
 on:
   push:
-    branches: master
+    branches:
+      - master
   pull_request:
-    branches: master
+    branches:
+      - master
 
 jobs:
   code-analysis:
@@ -35,7 +37,7 @@ jobs:
       - name: Setup Maven
         uses: actions/setup-java@v2
         with:
-          java-version: '11'
+          java-version: '17'
 
       - name: Run Maven Dependency Check
         run: mvn org.owasp:dependency-check-maven:6.0.1:check
