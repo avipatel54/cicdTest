@@ -1,29 +1,59 @@
-name: Build and Test
+name: Code Analysis and Dependency Check
 
 on:
   push:
-    branches:
-      - master
+    branches: master
   pull_request:
-    branches:
-      - master
+    branches: master
 
 jobs:
-  build:
+  code-analysis:
     runs-on: ubuntu-latest
 
     steps:
       - name: Checkout code
         uses: actions/checkout@v2
 
-      - name: Set up JDK
+      - name: Initialize CodeQL
+        uses: github/codeql-action/init@v1
+        with:
+          languages: java
+
+      - name: Autobuild
+        uses: github/codeql-action/autobuild@v1
+
+      - name: Run CodeQL Analysis
+        uses: github/codeql-action/analyze@v1
+
+  dependency-check:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+
+      - name: Setup Maven
         uses: actions/setup-java@v2
         with:
-          java-version: '17'
-          distribution: 'adopt'
+          java-version: '11'
 
-      - name: Build with Maven
-        run: mvn -B clean package --file pom.xml
+      - name: Run Maven Dependency Check
+        run: mvn org.owasp:dependency-check-maven:6.0.1:check
 
-      - name: Run Tests
-        run: mvn test --file pom.xml
+  snapshot-dependency-check:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v2
+        with:
+          node-version: '14'
+
+      - name: Install SNYK
+        run: npm install -g snyk
+
+      - name: Run SNYK Dependency Check
+        run: snyk test
