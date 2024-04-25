@@ -38,6 +38,7 @@ jobs:
         uses: actions/setup-java@v2
         with:
           java-version: '17'
+          distribution: 'adopt'
 
       - name: Run Maven Dependency Check
         run: mvn org.owasp:dependency-check-maven:6.0.1:check
