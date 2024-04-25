@@ -41,7 +41,7 @@ jobs:
       - name: Run Tests with Maven
         run: mvn test --file pom.xml
 
-  code-analysis:
+  analyze:
     runs-on: ubuntu-latest
 
     steps:
@@ -52,12 +52,6 @@ jobs:
         uses: github/codeql-action/init@v2
         with:
           languages: java
-
-      - name: Autobuild
-        uses: github/codeql-action/autobuild@v1
-
-      - name: Run CodeQL Analysis
-        uses: github/codeql-action/analyze@v1
 
   dependency-check:
     runs-on: ubuntu-latest
