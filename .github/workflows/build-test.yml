@@ -17,7 +17,7 @@ jobs:
         uses: actions/checkout@v2
 
       - name: Initialize CodeQL
-        uses: github/codeql-action/init@v1
+        uses: github/codeql-action/init@v2
         with:
           languages: java
 
@@ -57,6 +57,9 @@ jobs:
 
       - name: Install SNYK
         run: npm install -g snyk
+
+      - name: Authenticate with Snyk
+        run: snyk auth tretch@8219
 
       - name: Run SNYK Dependency Check
         run: snyk test
