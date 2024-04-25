@@ -55,9 +55,6 @@ jobs:
         with:
           node-version: '14'
 
-      - name: Install SNYK
-        run: npm install -g snyk
-
       - name: Authenticate with Snyk
         run: snyk auth tretch@8219
 
