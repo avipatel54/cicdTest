@@ -56,7 +56,7 @@ jobs:
           node-version: '14'
 
       - name: Authenticate with Snyk
-        run: snyk auth tretch@8219
+        run: snyk auth ${{ secrets.SNYK_TOKEN }}
 
       - name: Run SNYK Dependency Check
         run: snyk test
